@@ -1,0 +1,28 @@
+{
+  "parent_frame_id": "world",
+  "child_frame_id": "blue_cube",
+  "transform": {
+    "translation": {
+      "x": 0.0,
+      "y": 1.4,
+      "z": 0.05
+    },
+    "rotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    }
+  },
+  "extra_data": {
+    "active": true,
+    "show_mesh": true,
+    "mesh_r": 0.0,
+    "mesh_g": 0.0,
+    "mesh_b": 1.0,
+    "mesh_a": 1.0,
+    "mesh_type": 10,
+    "mesh_path": "/home/student/Desktop/scenario/meshes/cube.stl",
+    "mesh_scale": 0.01
+  }
+}

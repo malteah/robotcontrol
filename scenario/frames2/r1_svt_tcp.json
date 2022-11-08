@@ -1,0 +1,22 @@
+{
+  "parent_frame_id": "r1_svt",
+  "child_frame_id": "r1_svt_tcp",
+  "transform": {
+    "translation": {
+    	"x": 0.0,
+        "y": 0.0,
+        "z": 0.313365
+    },
+    "rotation": {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    }
+  },
+  "extra_data": {
+    "active": false,
+    "show_mesh": false
+  }
+}
+

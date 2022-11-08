@@ -1,0 +1,20 @@
+{
+  "parent_frame_id": "world",
+  "child_frame_id": "pose_1",
+  "transform": {
+    "translation": {
+      "x": 0.0,
+      "y": 0.6,
+      "z": 0.05
+    },
+    "rotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    }
+  },
+  "extra_data": {
+    "active": false
+  }
+}

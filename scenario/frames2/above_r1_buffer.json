@@ -1,0 +1,20 @@
+{
+  "parent_frame_id": "r1_buffer",
+  "child_frame_id": "above_r1_buffer",
+  "transform": {
+    "translation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.2
+    },
+    "rotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    }
+  },
+  "extra_data": {
+    "active": false
+  }
+}

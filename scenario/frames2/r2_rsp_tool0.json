@@ -1,0 +1,21 @@
+{
+  "parent_frame_id": "r2_tool0",
+  "child_frame_id": "r2_rsp_tool0",
+  "transform": {
+    "translation": {
+    	"x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "rotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    }
+  },
+  "extra_data": {
+    "active": false,
+    "show_mesh": false
+  }
+}
