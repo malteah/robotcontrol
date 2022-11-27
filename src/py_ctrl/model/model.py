@@ -117,12 +117,12 @@ def the_model() -> Model:
                 name=f"op_move_to_above_{pose}",
 
                 precondition=Transition("pre", 
-                g(f""), #robot_pose != above_{pose} && robot_state == initial && !robot_run
+                g(f"robot_pose != above_{pose} && robot_state == initial && !robot_run"),
                 a(f"robot_command = move_j, robot_run, robot_goal_frame = above_{pose}" )),
 
                 postcondition=Transition("post", 
                 g(f"robot_state == done"), 
-                a(f"!robot_run, robot_pose <- above_{pose}")),
+                a(f"!robot_run, robot_pose = above_{pose}")),
 
                 effects= (), # a(f"robot_pose <- {pose}")
 
@@ -134,11 +134,11 @@ def the_model() -> Model:
 
                 precondition=Transition("pre", 
                 g(f"robot_pose == above_{pose} && {col}_cube_at = {pose} && robot_state == initial && !robot_run"), 
-                a(f"robot_command = move_j, robot_run, gripper_run, gripper_command = pick_{col}, robot_goal_frame = above_{pose}" )),
+                a(f"robot_command = move_j, robot_run, gripper_run, gripper_command = pick_{col}")), #robot_goal_frame = {pose}
 
                 postcondition=Transition("post", 
                 g(f"robot_state == done"), #gripper_state == exec?
-                a(f"!robot_run, robot_goal_frame = above_{pose}")),
+                a(f"!robot_run, robot_pose <- above_{pose}, {col}_cube_at = gripper")), #robot_goal_frame = above_{pose}
 
                 effects= (), # a(f"robot_pose <- {pose}")
 
