@@ -118,11 +118,11 @@ def the_model() -> Model:
 
                 precondition=Transition("pre", 
                 g(f"robot_pose == above_{pose} && {col}_cube_at == {pose} && !gripper_run"), #&& robot_state == initial && !robot_run
-                a(f"robot_goal_frame = {pose}")),
+                a(f"robot_run, robot_goal_frame = {pose}")),
 
                 postcondition=Transition("post", 
-                g(f"robot_state == initial, robot_pose == {pose}"), #gripper_run == False, 
-                a(f"gripper_run, gripper_command = pick_{col}, {col}_cube_at = gripper, robot_goal_frame = above_{pose}")), #robot_goal_frame = above_{pose}, robot_pose = {pose}, !robot_run, 
+                g(f"robot_state == done, robot_pose == {pose}"), #gripper_run == False, 
+                a(f"!robot_run, gripper_run, gripper_command = pick_{col}, {col}_cube_at = gripper")), #robot_goal_frame = above_{pose}
 
                 effects= a(f"robot_state = initial"), 
 
@@ -149,7 +149,7 @@ def the_model() -> Model:
                 name=f"op_place_{col}_at_{pose}",
 
                 precondition=Transition("pre", 
-                g(f"robot_pose == above_{pose} && {col}_cube_at == gripper && !gripper_run && !(red_cube_at == {pose}|| blue_cube_at == {pose} || green_cube_at == {pose})"), #&& robot_state == initial && !robot_run
+                g(f"robot_pose == above_{pose} && {col}_cube_at == gripper && !gripper_run &&  !(red_cube_at == {pose}|| blue_cube_at == {pose} || green_cube_at == {pose})"), #&& robot_state == initial && !robot_run
                 a(f"gripper_run, gripper_command = place_{col}")), #robot_goal_frame = {pose}
 
                 postcondition=Transition("post", 
