@@ -52,6 +52,75 @@ def the_model() -> Model:
     )
 
     ops = {}
+    for num in [1, 2]:
+        o_num = 2 if num == 1 else 1
+        for pose in ["pose_1", "pose_2", "pose_3", f"r{num}_buffer"]: # "buffer"
+            for col in ["red","green","blue"]:
+
+                ops[f"op_r{num}_move_to_{pose}"] = Operation(
+                    name=f"op_r{num}_move_to_{pose}",
+
+                    precondition=Transition("pre", 
+                    g(f"r{num}_robot_pose == above_{pose} && r{o_num}_robot_pose != above_{pose} && r{o_num}_robot_pose != {pose} && r{num}_robot_state == initial && !r{num}_robot_run"), 
+                    a(f"r{num}_robot_command = move_j, r{num}_robot_run, r{num}_robot_goal_frame = {pose}" )),
+
+                    postcondition=Transition("post", 
+                    g(f"r{num}_robot_state == done"), 
+                    a(f"!r{num}_robot_run, r{num}_robot_pose <- {pose}")),
+
+                    effects= a(f"r{num}_robot_state = initial"), # a(f"robot_pose <- {pose}")
+
+                    to_run = Transition.default()
+                )
+                ops[f"op_r{num}_move_to_above_{pose}"] = Operation(
+                    name=f"op_r{num}_move_to_above_{pose}",
+                    
+                    precondition=Transition("pre",
+                    g(f"r{num}_robot_pose != above_{pose} && r{o_num}_robot_pose != above_{pose} && r{o_num}_robot_pose != {pose} && r{num}_robot_state == initial && !r{num}_robot_run"),
+                    a(f"r{num}_robot_command = move_j, r{num}_robot_run, r{num}_robot_goal_frame = above_{pose}" )),
+
+                    postcondition=Transition("post", 
+                    g(f"r{num}_robot_state == done"), 
+                    a(f"r{num}_!robot_run, r{num}_robot_pose = above_{pose}")),
+
+                    effects= a(f"r{num}_robot_state = initial"),
+
+                    to_run = Transition.default()
+                )
+
+                ops[f"op_r{num}_pick_up_{col}_from_{pose}"] = Operation(
+                    name=f"op_r{num}_pick_up_{col}_from_{pose}",
+
+                    precondition=Transition("pre", 
+                    g(f"r{num}_robot_pose == {pose} && {col}_cube_at == {pose} && !r{num}_gripper_run && !r{num}_robot_run && red_cube_at != r{num}_gripper && blue_cube_at != r{num}_gripper && green_cube_at != r{num}_gripper"), #&& !gripper_run && robot_state == initial && !robot_run
+                    a(f"r{num}_gripper_run, r{num}_gripper_command = pick_{col}")),
+
+                    postcondition=Transition("post", 
+                    g(f"r{num}_gripper_command == done"), #gripper_run == False, 
+                    a(f"!r{num}_gripper_run,  {col}_cube_at = r{num}_gripper")), #robot_goal_frame = above_{pose}
+
+                    effects= a(f"r{num}_robot_state = initial"), 
+
+                    to_run = Transition.default()
+                )
+
+                ops[f"op_r{num}_place_{col}_at_{pose}"] = Operation(
+                    name=f"op_r{num}_place_{col}_at_{pose}",
+
+                    precondition=Transition("pre", 
+                    g(f"r{num}_robot_pose == {pose} && {col}_cube_at == r{num}_gripper && red_cube_at != {pose} && blue_cube_at != {pose} && green_cube_at != {pose}"), 
+                    a(f"r{num}_gripper_run, r{num}_gripper_command = place_{col}")), #robot_goal_frame = {pose}
+
+                    postcondition=Transition("post", 
+                    g(f"r{num}_gripper_command == done"), #gripper_run == False
+                    a(f"!r{num}_gripper_run, {col}_cube_at = {pose}")), #robot_goal_frame = above_{pose}, robot_pose = above_{pose}, !robot_run, 
+
+                    effects= a(f"r{num}_robot_state = initial"), 
+
+                    to_run = Transition.default()
+                )
+
+
 
     # add the operations here: 
     # ops[f"op_r1_pick_red_cube"] = Operation(...

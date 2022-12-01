@@ -21,7 +21,7 @@ def main(args=None):
     pos = {
         "replan": True, 
         # change the goal here
-        "goal_as_string": "r1_robot_pose == above_r1_buffer && red_cube_at == r1_buffer && blue_cube_at == r2_buffer"
+        "goal_as_string": "r1_robot_pose == above_r1_buffer" #&& red_cube_at == r1_buffer && blue_cube_at == r2_buffer
     }
 
     msg.data = json.dumps(pos)

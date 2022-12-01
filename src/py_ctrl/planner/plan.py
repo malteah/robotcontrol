@@ -7,7 +7,7 @@ from  predicates.guards import Guard
 from predicates.actions import Action
     
 
-def plan(state: State, goal: Guard, model: Model, max_depth: int = 50) -> Optional[List[str]]:
+def plan(state: State, goal: Guard, model: Model, max_depth: int = 20) -> Optional[List[str]]:
     """
     Find a sequence of operations to reach the goal from the given state or
     return None if you can not find a plan. Use max_depth to stop searching when you have more than
