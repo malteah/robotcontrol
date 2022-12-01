@@ -50,7 +50,7 @@ def the_model() -> Model:
         red_cube_at = "pose_2",  # pose_1, pose_2, pose_3, r1_gripper, r1_buffer, r2_gripper, r2_buffer
         blue_cube_at = "pose_3",  # pose_1, pose_2, pose_3, r1_gripper, r1_buffer, r2_gripper, r2_buffer
     )
-
+    # r1_robot_tcp_frame = 'r1_svt_tcp', # the tool tcp to use
     ops = {}
     for num in [1, 2]:
         o_num = 2 if num == 1 else 1
@@ -68,7 +68,7 @@ def the_model() -> Model:
                     g(f"r{num}_robot_state == done"), 
                     a(f"!r{num}_robot_run, r{num}_robot_pose <- {pose}")),
 
-                    effects= a(f"r{num}_robot_state = initial"), # a(f"robot_pose <- {pose}")
+                    effects= a(f"r{num}_robot_state = initial"),
 
                     to_run = Transition.default()
                 )
@@ -81,7 +81,7 @@ def the_model() -> Model:
 
                     postcondition=Transition("post", 
                     g(f"r{num}_robot_state == done"), 
-                    a(f"r{num}_!robot_run, r{num}_robot_pose = above_{pose}")),
+                    a(f"!r{num}_robot_run, r{num}_robot_pose = above_{pose}")),
 
                     effects= a(f"r{num}_robot_state = initial"),
 
