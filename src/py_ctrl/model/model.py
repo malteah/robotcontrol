@@ -51,14 +51,6 @@ a = predicates.actions.from_str
     # the current state of measured variables might not allow for a plan to be found. Nevertheless, the measured variables 
     # can change during the execution of the plan, so that change is emulated here to trick the planner.
 
-"""f"{pose}_col = None"
-        if f"green_cube_at" == {pose}:
-            f"{pose}_col = green"
-        elif f"red_cube_at" == {pose}:
-            f"{pose}_col = red"
-        else:
-            f"{pose}_col = blue"""
-
 def the_model() -> Model:
 
     initial_state = State(

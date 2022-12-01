@@ -310,7 +310,7 @@ class Runner(Node):
 
         # here we call the ticker. Change the pre_start parameter to true when
         # you want to prestart
-        self.state = tick_the_runner(self.state, self.model, False)
+        self.state = tick_the_runner(self.state, self.model, True)
 
         # below, we are publishing the command variables to the simulation via ros
         self.r1_send_ur_action_goal()
