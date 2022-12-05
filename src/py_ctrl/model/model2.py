@@ -52,14 +52,14 @@ def the_model() -> Model:
     )
     # r1_robot_tcp_frame = 'r1_svt_tcp', # the tool tcp to use
     ops = {}
-    for pose in ["pose_1", "pose_2", f"r1_buffer"]: # "buffer"
-        for col in ["red","green"]: # "green","blue"
+    for pose in ["pose_1", "pose_2", "r1_buffer"]: # "buffer"
+        for col in ["red","green","blue"]: # "green","blue"
 
             ops[f"op_r1_move_to_{pose}"] = Operation(
                 name=f"op_r1_move_to_{pose}",
 
                 precondition=Transition("pre", 
-                g(f"r2_robot_pose != {pose} && r1_robot_state == initial && !r1_robot_run"), 
+                g(f"r2_robot_pose != {pose} && r1_robot_pose != {pose} && r1_robot_state == initial && !r1_robot_run"), 
                 a(f"r1_robot_command = move_j, r1_robot_run, r1_robot_goal_frame = {pose}" )),
 
                 postcondition=Transition("post", 
@@ -103,14 +103,14 @@ def the_model() -> Model:
                 to_run = Transition.default()
             )
     
-    for pose in ["pose_2", "pose_3", f"r2_buffer"]: 
-        for col in ["green","blue"]:
+    for pose in ["pose_2", "pose_3", "r2_buffer"]: 
+        for col in ["red","green","blue"]:
 
             ops[f"op_r2_move_to_{pose}"] = Operation(
                 name=f"op_r2_move_to_{pose}",
 
                 precondition=Transition("pre", 
-                g(f"r2_robot_pose != {pose} && r2_robot_state == initial && !r2_robot_run"), 
+                g(f"r2_robot_pose != {pose} && r1_robot_pose != {pose} && r2_robot_state == initial && !r2_robot_run"), 
                 a(f"r2_robot_command = move_j, r2_robot_run, r2_robot_goal_frame = {pose}" )),
 
                 postcondition=Transition("post", 
